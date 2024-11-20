@@ -17,7 +17,7 @@ namespace Banking.Services
             if (amount <= 0)
                 throw new InvalidOperationException("Deposit amount must be greater than zero.");
 
-            var account = await _context.accounts.SingleOrDefaultAsync(x => x.Id == accountId);
+            var account = await _context.Accounts.SingleOrDefaultAsync(x => x.Id == accountId);
             if (account == null)
                 throw new ArgumentException($"Account with ID {accountId} not found.");
 
@@ -31,7 +31,7 @@ namespace Banking.Services
             if (amount <= 0)
                 throw new InvalidOperationException("Withdrawal amount must be greater than zero.");
 
-            var account = await _context.accounts.SingleOrDefaultAsync(x => x.Id == accountId);
+            var account = await _context.Accounts.SingleOrDefaultAsync(x => x.Id == accountId);
             if (account == null)
                 throw new ArgumentException($"Account with ID {accountId} not found.");
 
@@ -50,11 +50,11 @@ namespace Banking.Services
             if (fromAccountId == toAccountId)
                 throw new InvalidOperationException("Cannot transfer to the same account.");
 
-            var fromAccount = await _context.accounts.SingleOrDefaultAsync(x => x.Id == fromAccountId);
-            var toAccount = await _context.accounts.SingleOrDefaultAsync(x => x.Id == toAccountId);
+            var fromAccount = await _context.Accounts.SingleOrDefaultAsync(x => x.Id == fromAccountId);
+            var toAccount = await _context.Accounts.SingleOrDefaultAsync(x => x.Id == toAccountId);
 
             if (fromAccount == null || toAccount == null)
-                throw new ArgumentException("One or both accounts do not exist.");
+                throw new ArgumentException("One or both Accounts do not exist.");
 
             if (fromAccount.Balance < amount)
                 throw new ArgumentException("Insufficient funds in the source account.");

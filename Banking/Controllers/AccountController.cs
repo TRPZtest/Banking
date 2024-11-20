@@ -29,9 +29,9 @@ namespace Banking.Controllers
         [HttpGet()]      
         public async Task<List<Account>> GetAllAsync()
         {
-            var accounts = await _accountService.GetAllAsync();
+            var Accounts = await _accountService.GetAllAsync();
 
-            return accounts;
+            return Accounts;
         }
 
         [ProducesResponseType<AddAccountResponseDto>(StatusCodes.Status200OK)]

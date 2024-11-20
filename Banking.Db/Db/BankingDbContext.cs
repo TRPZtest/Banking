@@ -10,7 +10,7 @@ namespace Banking.Db
 {
     public class BankingDbContext : DbContext
     {
-        public DbSet<Account> accounts { get; set; }
+        public DbSet<Account> Accounts { get; set; }
 
         public BankingDbContext(DbContextOptions options) : base(options) 
         {            

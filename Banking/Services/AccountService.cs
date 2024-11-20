@@ -22,7 +22,7 @@ namespace Banking.Services
 
             var account = new Account { Balance = initialBalance };
 
-            _context.accounts.Add(account);
+            _context.Accounts.Add(account);
 
             await _context.SaveChangesAsync();
 
@@ -31,14 +31,14 @@ namespace Banking.Services
 
         public async Task<List<Account>> GetAllAsync()
         {
-            var accounts = await _context.accounts.ToListAsync();
+            var Accounts = await _context.Accounts.ToListAsync();
 
-            return accounts;
+            return Accounts;
         }
 
         public async Task<Account?> GetByIdAsync(long id)
         {
-            var account = await _context.accounts.SingleOrDefaultAsync(x => x.Id == id);
+            var account = await _context.Accounts.SingleOrDefaultAsync(x => x.Id == id);
 
             return account;
         }
