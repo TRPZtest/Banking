@@ -14,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BankingDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("BankingDb")));
 
 builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<TransactionService>();
 
 var app = builder.Build();
 
