@@ -5,6 +5,6 @@ namespace Banking.Models
     public class AccountDto
     {
         [Range(0.01, double.MaxValue, ErrorMessage = "Balance must be greater than zero.")]
-        public decimal Balance { get; set; }
+        public decimal InitialBalance { get; set; }
     }
 }
