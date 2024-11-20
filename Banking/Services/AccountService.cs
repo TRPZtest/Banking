@@ -15,7 +15,7 @@ namespace Banking.Services
             _context = context;
         }
 
-        public async Task<long> CreateAccount(decimal initialBalance)
+        public async Task<long> CreateAccountAsync(decimal initialBalance)
         {
             if (initialBalance < 0)
                 throw new ArgumentException("Initial balance cannot be negative.");
@@ -29,14 +29,14 @@ namespace Banking.Services
             return account.Id;
         }
 
-        public async Task<List<Account>> GetAll()
+        public async Task<List<Account>> GetAllAsync()
         {
             var accounts = await _context.accounts.ToListAsync();
 
             return accounts;
         }
 
-        public async Task<Account?> GetById(long id)
+        public async Task<Account?> GetByIdAsync(long id)
         {
             var account = await _context.accounts.SingleOrDefaultAsync(x => x.Id == id);
 

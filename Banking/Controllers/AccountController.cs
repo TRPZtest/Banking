@@ -21,30 +21,29 @@ namespace Banking.Controllers
         [HttpPost]        
         public async Task<AddAccountResponseDto> Add(AccountDto accountDto)
         {
-            var id = await _accountService.CreateAccount(accountDto.Balance);
+            var id = await _accountService.CreateAccountAsync(accountDto.Balance);
 
             return new AddAccountResponseDto { AccountId = id };
         }
 
-        [HttpGet("{id}")]      
+        [HttpGet()]      
         public async Task<List<Account>> GetAllAsync()
         {
-            var accounts = await _accountService.GetAll();
+            var accounts = await _accountService.GetAllAsync();
 
             return accounts;
         }
 
         [ProducesResponseType<AddAccountResponseDto>(StatusCodes.Status200OK)]
-        [HttpGet]
-        public async Task<IActionResult> GetByIdAsync(long id) 
+        [HttpGet("/{id}")]
+        public async Task<IActionResult> GetByIdAsync([FromRoute]long id) 
         {
-            var account = _accountService.GetById(id);
+            var account = await _accountService.GetByIdAsync(id);
 
             if (account == null)
                 return NotFound();
 
             return Json(account);
         }
-
     }
 }
