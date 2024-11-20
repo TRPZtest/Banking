@@ -23,8 +23,8 @@ namespace Banking.Tests
 
         public void ResetDatabase()
         {           
-            _context.Database.EnsureDeleted(); // Deletes all data and schema
-            _context.Database.EnsureCreated(); // Recreates the schema         
+            _context.Database.EnsureDeleted();
+            _context.Database.EnsureCreated();        
         }
     }
 }

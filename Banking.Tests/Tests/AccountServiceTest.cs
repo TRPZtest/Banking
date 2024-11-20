@@ -30,9 +30,7 @@ namespace Banking.Tests
             var account = await _context.Accounts.FindAsync(accountId);
     
             Assert.NotNull(account);
-            Assert.Equal(initialBalance, account.Balance);
-
-            ResetDatabase();
+            Assert.Equal(initialBalance, account.Balance);          
         }
 
         [Fact]
@@ -52,8 +50,8 @@ namespace Banking.Tests
 
             var Accounts = new List<Account>
             {
-                new Account { Balance = 100 },
-                new Account { Balance = 200 }
+                new Account { Id = 1, Balance = 100 },
+                new Account { Id = 2, Balance = 200 }
             };
 
             _context.Accounts.AddRange(Accounts);

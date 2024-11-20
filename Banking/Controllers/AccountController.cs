@@ -35,7 +35,7 @@ namespace Banking.Controllers
         }
 
         [ProducesResponseType<AddAccountResponseDto>(StatusCodes.Status200OK)]
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute]long id) 
         {
             var account = await _accountService.GetByIdAsync(id);

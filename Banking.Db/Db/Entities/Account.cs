@@ -13,6 +13,7 @@ namespace Banking.Db.Entities
         [Key]
         public long Id { get; set; }
         [Precision(14, 2)]
+        [Required]
         public decimal Balance { get; set; }
     }
 }
