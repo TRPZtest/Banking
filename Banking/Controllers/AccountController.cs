@@ -21,7 +21,7 @@ namespace Banking.Controllers
         [HttpPost]        
         public async Task<AddAccountResponseDto> Add(AccountDto accountDto)
         {
-            var id = await _accountService.CreateAccountAsync(accountDto.Balance);
+            var id = await _accountService.CreateAccountAsync(accountDto.InitialBalance);
 
             return new AddAccountResponseDto { AccountId = id };
         }
