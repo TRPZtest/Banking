@@ -9,7 +9,7 @@ namespace Banking.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : Controller
+    public class AccountController : ControllerBase
     {
         private readonly AccountService _accountService;
 
@@ -21,7 +21,7 @@ namespace Banking.Controllers
         [HttpPost]        
         public async Task<AddAccountResponseDto> Add(AccountDto accountDto)
         {
-            var id = await _accountService.CreateAccountAsync(accountDto.Balance);
+            var id = await _accountService.CreateAccountAsync(accountDto.InitialBalance);
 
             return new AddAccountResponseDto { AccountId = id };
         }
@@ -43,7 +43,7 @@ namespace Banking.Controllers
             if (account == null)
                 return NotFound();
 
-            return Json(account);
+            return Ok(account);
         }
     }
 }

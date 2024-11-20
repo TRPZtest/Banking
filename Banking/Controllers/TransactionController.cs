@@ -9,7 +9,7 @@ namespace Banking.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class TransactionController : ControllerBase
+    public class TransactionController : TransactionControllerBase
     {
         private readonly TransactionService _transactionService;
 
@@ -46,22 +46,6 @@ namespace Banking.Controllers
                 await _transactionService.TransferAsync(transferDto.FromAccountId, transferDto.ToAccountId, transferDto.Amount);
                 return Ok(new { message = "Transfer successful." });
             });
-        }
-    
-        private async Task<IActionResult> ExecuteTransaction(Func<Task<IActionResult>> action)
-        {
-            try
-            {
-                return await action();
-            }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(new { message = ex.Message });
-            }
-            catch (ArgumentException ex)
-            {
-                return UnprocessableEntity(new { message = ex.Message });
-            }
-        }
+        }           
     }
 }
