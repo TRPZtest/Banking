@@ -11,69 +11,63 @@ using System.Threading.Tasks;
 namespace Banking.Tests
 {
     public class AccountServiceTest : TestBase
-    {    
-        private readonly AccountService _service;
-
-        public AccountServiceTest() : base()
-        {           
-            _service = new AccountService(_context);
-        }
-      
+    {
         [Fact]
         public async Task CreateAccountAsync_ShouldAddAccount()
         {
-            ResetDatabase();
+            using var dbContext = GetDbContext();
+            var service = new AccountService(dbContext);
 
             var initialBalance = 100;
-         
-            var accountId = await _service.CreateAccountAsync(initialBalance);
-            var account = await _context.Accounts.FindAsync(accountId);
-    
+            var accountId = await service.CreateAccountAsync(initialBalance);
+            var account = await dbContext.Accounts.FindAsync(accountId);
+
             Assert.NotNull(account);
-            Assert.Equal(initialBalance, account.Balance);          
+            Assert.Equal(initialBalance, account.Balance);
         }
 
         [Fact]
         public async Task CreateAccountAsync_ShouldThrowException_ForNegativeBalance()
         {
-            ResetDatabase();
+             using var dbContext = GetDbContext();
+            var service = new AccountService(dbContext);
 
             var initialBalance = -100;
-          
-            await Assert.ThrowsAsync<ArgumentException>(() => _service.CreateAccountAsync(initialBalance));
+            await Assert.ThrowsAsync<ArgumentException>(() => service.CreateAccountAsync(initialBalance));
         }
 
         [Fact]
         public async Task GetAllAsync_ShouldReturnAllAccounts()
         {
-            ResetDatabase();
+             using var dbContext = GetDbContext();
+            var service = new AccountService(dbContext);
 
-            var Accounts = new List<Account>
-            {
-                new Account { Id = 1, Balance = 100 },
-                new Account { Id = 2, Balance = 200 }
-            };
+            var accounts = new List<Account>
+        {
+            new Account { Id = 1, Balance = 100 },
+            new Account { Id = 2, Balance = 200 }
+        };
 
-            _context.Accounts.AddRange(Accounts);
-            await _context.SaveChangesAsync();
-         
-            var result = await _service.GetAllAsync();
-     
-            Assert.Equal(Accounts.Count, result.Count);        
+            dbContext.Accounts.AddRange(accounts);
+            await dbContext.SaveChangesAsync();
+
+            var result = await service.GetAllAsync();
+
+            Assert.Equal(accounts.Count, result.Count);
         }
 
         [Fact]
         public async Task GetByIdAsync_ShouldReturnAccount_WhenAccountExists()
         {
-            ResetDatabase();
+             using var dbContext = GetDbContext();
+            var service = new AccountService(dbContext);
 
             var account = new Account { Balance = 100 };
+            dbContext.Accounts.Add(account);
+            await dbContext.SaveChangesAsync();
 
-            _context.Accounts.Add(account);
-            await _context.SaveChangesAsync();
-        
-            var result = await _service.GetByIdAsync(account.Id);
-        
+            var result = await service.GetByIdAsync(account.Id);
+
             Assert.NotNull(result);
             Assert.Equal(account.Id, result.Id);
         }
@@ -81,20 +75,21 @@ namespace Banking.Tests
         [Fact]
         public async Task GetByIdAsync_ShouldReturnNull_WhenAccountDoesNotExist()
         {
-            ResetDatabase();
+             using var dbContext = GetDbContext();
+            var service = new AccountService(dbContext);
 
-            var Accounts = new List<Account>
-            {
-                new Account { Id = 1, Balance = 100 },
-                new Account { Id = 2, Balance = 200 }
-            };
+            var accounts = new List<Account>
+        {
+            new Account { Id = 1, Balance = 100 },
+            new Account { Id = 2, Balance = 200 }
+        };
 
-            _context.Accounts.AddRange(Accounts);
-            await _context.SaveChangesAsync();
+            dbContext.Accounts.AddRange(accounts);
+            await dbContext.SaveChangesAsync();
 
-            var result = await _service.GetByIdAsync(3);
-      
-            Assert.Null(result);           
+            var result = await service.GetByIdAsync(3);
+
+            Assert.Null(result);
         }
     }
 }
