@@ -22,11 +22,7 @@ namespace Banking.Tests
         }
 
         public void ResetDatabase()
-        {
-            var options = new DbContextOptionsBuilder<BankingDbContext>()
-                .UseInMemoryDatabase("BankingTestDb") // Same database name for all tests
-                .Options;
-
+        {           
             _context.Database.EnsureDeleted(); // Deletes all data and schema
             _context.Database.EnsureCreated(); // Recreates the schema         
         }

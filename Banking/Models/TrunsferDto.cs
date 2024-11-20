@@ -8,6 +8,7 @@ namespace Banking.Models
         public long FromAccountId { get; set; }
         [Required]
         public long ToAccountId { get; set; }
+        [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
         public Decimal Amount { get; set; }
     }
